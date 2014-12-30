@@ -46,6 +46,8 @@
     autocmd FileType python,ruby,sh setlocal textwidth=79
     set colorcolumn=+1
 
+    autocmd FileType rst setlocal expandtab shiftwidth=2 softtabstop=2
+
     " defined in ~/.vimrc
     autocmd FileType rst autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 
