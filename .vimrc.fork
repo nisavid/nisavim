@@ -59,6 +59,8 @@
 " Key (Re)Mappings {
     nnoremap gj j
     nnoremap gk k
+    nnoremap H gT
+    nnoremap L gt
     nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
     imap OA <C-o>k
@@ -112,8 +114,9 @@
     " }
 
     " NERDtree {
-        nunmap <Leader>nt
+        unmap <C-e>
         unmap <Leader>e
+        nunmap <Leader>nt
     " }
 
     " nerdtree-tabs {
@@ -174,6 +177,7 @@
     " }
 
     " sessionman {
+        nunmap <leader>sc
         nunmap <leader>sl
         nunmap <leader>ss
 
