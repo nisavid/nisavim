@@ -42,16 +42,17 @@
 " Formatting {
     set wrap
 
-    autocmd FileType gitcommit,rst setlocal textwidth=72
-    autocmd FileType python,ruby,sh setlocal textwidth=79
+    autocmd FileType gitcommit,html,rst setlocal textwidth=72
+    autocmd FileType conf,json,python,ruby,sh,sls setlocal textwidth=79
     set colorcolumn=+1
 
-    autocmd FileType rst setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType gitcommit,html,json,rst setlocal expandtab shiftwidth=2 softtabstop=2
 
     " defined in ~/.vimrc
-    autocmd FileType rst autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+    autocmd FileType rst,ruby autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
 
-    autocmd FileType python,rst,ruby,sh setlocal formatoptions-=t
+    " do not auto-wrap according to ``textwidth`` within these file types
+    autocmd FileType conf,python,rst,ruby,sh,sls setlocal formatoptions-=t
 
     set tildeop
 " }
