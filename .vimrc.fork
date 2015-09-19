@@ -122,6 +122,8 @@
 
     " neocomplete {
         let g:neocomplete#disable_auto_complete = 1
+        inoremap <expr><C-n> neocomplete#start_manual_complete()
+        inoremap <expr><C-y> neocomplete#close_popup()
     " }
 
     " NERDtree {
