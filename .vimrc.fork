@@ -96,6 +96,10 @@
         map ;e <Plug>CamelCaseMotion_e
     " }
 
+    " deoplete {
+        let g:deoplete#enable_at_startup = 1
+    " }
+
     " Fugitive {
         nunmap <leader>gs
         nunmap <leader>gd
@@ -120,12 +124,6 @@
     " jedi-vim {
         let g:jedi#popup_select_first = 0
     "}
-
-    " neocomplete {
-        let g:neocomplete#disable_auto_complete = 1
-        inoremap <expr><C-n> neocomplete#start_manual_complete()
-        inoremap <expr><C-y> neocomplete#close_popup()
-    " }
 
     " NERDtree {
         unmap <C-e>

@@ -3,7 +3,6 @@ let g:spf13_bundle_groups=
          \'misc',
          \'programming',
          \'writing',
-         \'neocomplete',
          \'haskell',
          \'html',
          \'javascript',
