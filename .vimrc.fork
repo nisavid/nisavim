@@ -20,7 +20,8 @@
 
 " Environment {
     set shell=$SHELL
-    set term=xterm-256color
+    " NOTE: disabled for Neovim
+    "set term=xterm-256color
 " }
 
 " General {
