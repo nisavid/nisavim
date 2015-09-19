@@ -39,16 +39,4 @@ NeoBundle 'Shougo/vimproc.vim', {
             \    },
             \ }
 
-" WARNING: this block might break on OS X
-" TODO: ensure that it doesn't
-" SEE: .vimrc.before.local
-" NOTE: if it breaks, comment it out
-UnBundle 'Valloric/YouCompleteMe'
-NeoBundle 'Valloric/YouCompleteMe', {
-            \ 'build' : {
-            \     'mac' : './install.sh --clang-completer',
-            \     'unix' : './install.sh --clang-completer',
-            \     },
-            \ }
-
 call neobundle#end()
