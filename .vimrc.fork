@@ -33,6 +33,11 @@
     set sessionoptions=curdir,folds,help,localoptions,tabpages,winsize
 " }
 
+" File types {
+    autocmd BufRead,BufNewFile *.il set filetype=ocean
+    autocmd BufRead,BufNewFile *.ocn set filetype=ocean
+" }
+
 " Vim UI {
     let g:local_ctermbg_altcolor=((&background == "dark")? "black" : "lightgrey")
     let g:local_guibg_altcolor=((&background == "dark")? "#073642" : "#eee8d5")
