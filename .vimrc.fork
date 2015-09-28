@@ -163,29 +163,38 @@
     " }
 
     " PyMode {
-        let g:pymode_options=0
+        let g:pymode_options = 0
 
-        let g:pymode_lint_checker="pyflakes,pep8,mccabe"
-        " don't require continuation lines to be indented with multiples of 4
-        " spaces
-        let g:pymode_lint_ignore="E121"
+        let g:pymode_rope = 1
+        let g:pymode_rope_goto_definition_cmd = 'new'
+        " NOTE: disabled in favor of neocomplete/deoplete
+        let g:pymode_rope_completion = 0
+        let g:pymode_rope_complete_on_dot = 0
+        let g:pymode_rope_extended_complete = 1
+
+        " NOTE: disabled in favor of Syntastic
+        let g:pymode_lint = 0
+        let g:pymode_lint_on_write = 1
+        let g:pymode_lint_on_fly = 0
+        let g:pymode_lint_cwindow = 1
+        let g:pymode_quickfix_minheight = 3
+        let g:pymode_quickfix_maxheight = 6
+        let g:pymode_lint_signs = 1
+
+        let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'pep257', 'mccabe']
+
+        " pep8 rejects continuation lines unless indented by multiples of 4
+        let g:pymode_lint_ignore = 'E121'
         " pep8 rejects some reasonable forms of visual indentation
-        let g:pymode_lint_ignore.=",E127"
+        let g:pymode_lint_ignore .= ',E127'
         " pep8 rejects some reasonable forms of visual indentation
-        let g:pymode_lint_ignore.=",E128"
+        let g:pymode_lint_ignore .= ',E128'
         " pep8 rejects whitespace before a call's left parenthesis even if it
         " follows a line continuation
-        let g:pymode_lint_ignore.=",E211"
+        let g:pymode_lint_ignore .= ',E211'
         " pyflakes rejects 'from ... import *' even in init modules that are
         " including some of their children
-        let g:pymode_lint_ignore.=",W404"
-
-        let g:pymode_rope=1
-        let g:pymode_rope_global_prefix="<Leader>rp"
-        let g:pymode_rope_local_prefix="<Leader>r"
-        let g:pymode_rope_goto_def_newwin="new"
-        let g:pymode_rope_vim_completion=0
-        let g:pymode_rope_extended_complete=1
+        let g:pymode_lint_ignore .= ',W404'
     " }
 
     " ri {
@@ -214,6 +223,38 @@
 
     " Surround {
         let b:surround_indent=1
+    " }
+
+    " Syntastic {
+        let g:syntastic_aggregate_errors = 1
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 0
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 1
+        let g:syntastic_loc_list_height = 6
+
+        let g:syntastic_shell = '/usr/bin/zsh'
+        let g:syntastic_python_python_exec = '/usr/bin/python3'
+        let g:syntastic_python_checkers = ['pylama']
+
+        " rationale:
+        "
+        "   E127
+        "     pep8 rejects some reasonable forms of visual indentation
+        "
+        "   E211
+        "     pep8 rejects whitespace before a call's left parenthesis even if
+        "     it follows a line continuation.  placing it there helps to
+        "     identify the arguments
+        "
+        "   W404
+        "     pyflakes rejects 'from ... import *' even in init modules that
+        "     are including some of their children.  extracting code to
+        "     private modules and including them in their parents helps to
+        "     organize the code
+        let g:syntastic_quiet_messages = {
+            \ 'regex': '\vE127|E211|W404'
+            \ }
     " }
 
     " Tabmerge {
