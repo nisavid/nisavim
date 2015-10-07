@@ -16,6 +16,28 @@
         call delete(outfile)
         call delete(time_outfile)
     endfunction
+
+    function SignsToggle()
+        if !has("signs") || empty(bufname(''))
+            return
+        endif
+        if !exists("s:signfile")
+            let s:signfile = tempname().'_'
+        endif
+        redir =>a|exe "sil sign place buffer=".bufnr('')|redir end
+        let signs = split(a, "\n")[1:]
+        if !empty(signs)
+            let bufnr = bufnr('')
+            exe ":sil SaveSigns!" s:signfile.bufnr('')
+            if bufnr('') != bufnr
+                exe "noa wq"
+            endif
+            sign unplace *
+        elseif filereadable(s:signfile.bufnr(''))
+            exe "so" s:signfile.bufnr('')
+            call delete(s:signfile.bufnr(''))
+        endif
+    endfunction
 " }
 
 " Environment {
@@ -32,6 +54,11 @@
     set viminfo='10,\"100,:20,%,n~/.viminfo
 
     set sessionoptions=curdir,folds,help,localoptions,tabpages,winsize
+" }
+
+" File types {
+    autocmd BufRead,BufNewFile *.il set filetype=ocean
+    autocmd BufRead,BufNewFile *.ocn set filetype=ocean
 " }
 
 " Vim UI {
@@ -52,17 +79,24 @@
 " Formatting {
     set wrap
 
-    autocmd FileType gitcommit,html,rst setlocal textwidth=72
-    autocmd FileType conf,json,python,ruby,sh,sls setlocal textwidth=79
+    autocmd FileType gitcommit,rst setlocal textwidth=72
+    autocmd FileType coffee,conf,haml,html,jade,javascript,json,python,ruby,sh,sls
+      \ setlocal textwidth=94
     set colorcolumn=+1
 
-    autocmd FileType gitcommit,html,json,rst setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst
+      \ setlocal expandtab shiftwidth=2 softtabstop=2
 
-    " defined in ~/.vimrc
-    autocmd FileType rst,ruby autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    " NOTE: StripTrailingWhitespace is defined in ~/.vimrc
+    autocmd FileType coffee,css,eruby,haml,html,jade,javascript,rst,ruby
+      \ autocmd BufWritePre <buffer>
+          \ if !exists('g:spf13_keep_trailing_whitespace')
+          \ | call StripTrailingWhitespace()
+          \ | endif
 
     " do not auto-wrap according to ``textwidth`` within these file types
-    autocmd FileType conf,python,rst,ruby,sh,sls setlocal formatoptions-=t
+    autocmd FileType coffee,conf,haml,html,jade,javascript,python,rst,ruby,sh,sls
+      \ setlocal formatoptions-=t
 
     set tildeop
 " }
@@ -78,6 +112,8 @@
     imap OB <C-o>j
     imap OC <C-o>l
     imap OD <C-o>h
+
+    nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
     autocmd FileType rst nmap <leader>R :call PreviewRst2Html()<CR>
@@ -125,6 +161,21 @@
         let g:jedi#popup_select_first = 0
     "}
 
+    " Neomake {
+        autocmd! BufRead,BufNewFile * Neomake
+        autocmd! BufWritePost * Neomake
+
+        let g:neomake_open_list = 2
+        let g:neomake_list_height = 3
+
+        let g:neomake_ruby_mri_maker = {
+          \ 'args': ['-c', '-T1'],
+          \ }
+        let g:neomake_ruby_rubocop_maker = {
+          \ 'args': ['--format', 'emacs', '--rails'],
+          \ }
+    " }
+
     " NERDtree {
         unmap <C-e>
         unmap <Leader>e
@@ -157,29 +208,38 @@
     " }
 
     " PyMode {
-        let g:pymode_options=0
+        let g:pymode_options = 0
 
-        let g:pymode_lint_checker="pyflakes,pep8,mccabe"
-        " don't require continuation lines to be indented with multiples of 4
-        " spaces
-        let g:pymode_lint_ignore="E121"
+        let g:pymode_rope = 1
+        let g:pymode_rope_goto_definition_cmd = 'new'
+        " NOTE: disabled in favor of neocomplete/deoplete
+        let g:pymode_rope_completion = 0
+        let g:pymode_rope_complete_on_dot = 0
+        let g:pymode_rope_extended_complete = 1
+
+        " NOTE: disabled in favor of Syntastic
+        let g:pymode_lint = 0
+        let g:pymode_lint_on_write = 1
+        let g:pymode_lint_on_fly = 0
+        let g:pymode_lint_cwindow = 1
+        let g:pymode_quickfix_minheight = 3
+        let g:pymode_quickfix_maxheight = 6
+        let g:pymode_lint_signs = 1
+
+        let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'pep257', 'mccabe']
+
+        " pep8 rejects continuation lines unless indented by multiples of 4
+        let g:pymode_lint_ignore = 'E121'
         " pep8 rejects some reasonable forms of visual indentation
-        let g:pymode_lint_ignore.=",E127"
+        let g:pymode_lint_ignore .= ',E127'
         " pep8 rejects some reasonable forms of visual indentation
-        let g:pymode_lint_ignore.=",E128"
+        let g:pymode_lint_ignore .= ',E128'
         " pep8 rejects whitespace before a call's left parenthesis even if it
         " follows a line continuation
-        let g:pymode_lint_ignore.=",E211"
+        let g:pymode_lint_ignore .= ',E211'
         " pyflakes rejects 'from ... import *' even in init modules that are
         " including some of their children
-        let g:pymode_lint_ignore.=",W404"
-
-        let g:pymode_rope=1
-        let g:pymode_rope_global_prefix="<Leader>rp"
-        let g:pymode_rope_local_prefix="<Leader>r"
-        let g:pymode_rope_goto_def_newwin="new"
-        let g:pymode_rope_vim_completion=0
-        let g:pymode_rope_extended_complete=1
+        let g:pymode_lint_ignore .= ',W404'
     " }
 
     " ri {
@@ -198,16 +258,145 @@
     " }
 
     " Sneak {
-        let g:sneak#streak=1
-
-        nmap f <Plug>SneakForward
-        xmap f <Plug>VSneakForward
-        nmap F <Plug>SneakBackward
-        xmap F <Plug>VSneakBackward
+        let g:sneak#streak = 1
+        nmap f <Plug>Sneak_f
+        nmap F <Plug>Sneak_F
+        xmap f <Plug>Sneak_f
+        xmap F <Plug>Sneak_F
+        omap f <Plug>Sneak_f
+        omap F <Plug>Sneak_F
+        nmap t <Plug>Sneak_t
+        nmap T <Plug>Sneak_T
+        xmap t <Plug>Sneak_t
+        xmap T <Plug>Sneak_T
+        omap t <Plug>Sneak_t
+        omap T <Plug>Sneak_T
     " }
 
     " Surround {
         let b:surround_indent=1
+    " }
+
+    " Syntastic {
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 1
+        let g:syntastic_always_populate_loc_list = 1
+
+        let g:syntastic_aggregate_errors = 1
+        let g:syntastic_auto_loc_list = 0
+        let g:syntastic_loc_list_height = 3
+        let g:syntastic_shell = '/usr/bin/env bash'
+        let g:syntastic_enable_ballons = has('ballon_eval')
+        let g:syntastic_error_symbol = '✗'
+        let g:syntastic_warning_symbol = '⚠'
+        let g:syntastic_style_error_symbol = '✗'
+        let g:syntastic_style_warning_symbol = '⚠'
+
+        let g:syntastic_chef_checkers = ['foodcritic']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_coffee_checkers = ['coffeelint']
+        let g:syntastic_coffee_checkers = []
+
+        let g:syntastic_haml_checkers = ['haml_lint']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_html_checkers = ['tidy']
+        let g:syntastic_html_checkers = []
+        let g:syntastic_html_tidy_quiet_messages = {
+            \ 'regex': '\v(proprietary attribute \"(ng\-.*|count|rel|when)\"'
+            \           . '|trimming empty \<'
+            \           . '|is not recognized\!'
+            \           . '|discarding unexpected \<'
+            \           . "|\\'\\<\\' \\+ \\'\\/\\' \\+ letter not allowed here"
+            \           . ')',
+            \ }
+        " proprietary attribute
+        "   Angular attributes
+        "
+        " trimming empty <
+        "   common pattern in Angular
+        "
+        " is not recognized!
+        " discarding unexpected <
+        "   custom components
+
+        let g:syntastic_jade_checkers = ['jade_lint']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_javascript_checkers = ['eslint']
+        let g:syntastic_javascript_checkers = []
+        let g:syntastic_javascript_eslint_exec = 'eslint_d'
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_json_checkers = ['jsonlint']
+        let g:syntastic_json_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_lua_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_puppet_checkers = ['puppetlint']
+        let g:syntastic_puppet_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_python_checkers = ['pylama']
+        let g:syntastic_python_checkers = []
+        let g:syntastic_python_python_exec = 'python3'
+        let g:syntastic_python_pylama_quiet_messages = {
+            \ 'regex': '\vE127|E211|W404'
+            \ }
+        " E127
+        "   pep8 rejects some reasonable forms of visual indentation
+        "
+        " E211
+        "   pep8 rejects whitespace before a call's left parenthesis even if
+        "   it follows a line continuation.  placing it there helps to
+        "   identify the arguments
+        "
+        " W404
+        "   pyflakes rejects 'from ... import *' even in init modules that
+        "   are including some of their children.  extracting code to
+        "   private modules and including them in their parents helps to
+        "   organize the code
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_rst_checkers = ['rstcheck']
+        let g:syntastic_rst_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_ruby_checkers = ['rubocop']
+        let g:syntastic_ruby_checkers = []
+        let g:syntastic_ruby_rubocop_quiet_messages = {
+            \ 'regex': '\vLine is too long'
+                     \ . '|Missing top-level .+ documentation'
+                     \ . '|Missing space after \#'
+                     \ . '|Avoid comma after the last item of a hash'
+                     \ . '|Use \`each_with_object\` instead of \`inject\`'
+                     \ . '|Name \`inject\` block params \`.+\`',
+            \ }
+                     "\ . '|Use \d+ \(not \d+\) spaces for indenting an expression spanning multiple lines'
+
+        let g:syntastic_sass_checkers = ['sassc']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_scss_checkers = ['scss_lint']
+        let g:syntastic_scss_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_sh_checkers = ['shellcheck', 'bashate']
+        let g:syntastic_sh_checkers = []
+
+        let g:syntastic_text_checkers = ['atdtool']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_vim_checkers = ['vimlint']
+        " vint seems to be broken with Python 3.5 (as of 2015-10-01)
+        let g:syntastic_vim_checkers = []
+
+        let g:syntastic_yaml_checkers = ['jsyaml']
+
+        "let g:syntastic_debug = 3
     " }
 
     " Tabmerge {
@@ -224,6 +413,15 @@
 
         nunmap <leader>tt
         nnoremap <silent> <leader>T :TagbarToggle<CR>
+    " }
+
+    " vim-test {
+        let test#strategy = 'neovim'
+        "nmap <silent> <leader>t :TestNearest<CR>
+        "nmap <silent> <leader>T :TestFile<CR>
+        "nmap <silent> <leader>a :TestSuite<CR>
+        "nmap <silent> <leader>l :TestLast<CR>
+        "nmap <silent> <leader>g :TestVisit<CR>
     " }
 
     " yankstack {

@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Upgrade Vim
 
 ok=1
-pushd ~/.spf13-vim-3 > /dev/null \
+cd ~/.spf13-vim-3 \
   && { git pull || unset ok
-       popd > /dev/null
-       [[ "$ok" ]] || false
+       cd - > /dev/null
+       [ "$ok" ] || false
      } \
   && vim +BundleInstall! \
   && vim +BundleClean! +NeoBundleUpdate +qa \
