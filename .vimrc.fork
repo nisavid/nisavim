@@ -280,6 +280,15 @@
         nnoremap <silent> <leader>T :TagbarToggle<CR>
     " }
 
+    " vim-test {
+        let test#strategy = 'neovim'
+        "nmap <silent> <leader>t :TestNearest<CR>
+        "nmap <silent> <leader>T :TestFile<CR>
+        "nmap <silent> <leader>a :TestSuite<CR>
+        "nmap <silent> <leader>l :TestLast<CR>
+        "nmap <silent> <leader>g :TestVisit<CR>
+    " }
+
     " yankstack {
         let g:yankstack_map_keys=0
         nmap <leader>p <Plug>yankstack_substitute_older_paste

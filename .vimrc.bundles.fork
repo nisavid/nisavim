@@ -21,6 +21,7 @@ Bundle 'danchoi/ri.vim'
 Bundle 'justinmk/vim-sneak'
 Bundle 'sudo.vim'
 Bundle 'Tabmerge'
+Bundle 'janko-m/vim-test'
 Bundle 'BenBergman/vsearch.vim'
 
 Bundle 'Shougo/neobundle.vim'
