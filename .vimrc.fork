@@ -16,6 +16,28 @@
         call delete(outfile)
         call delete(time_outfile)
     endfunction
+
+    function SignsToggle()
+        if !has("signs") || empty(bufname(''))
+            return
+        endif
+        if !exists("s:signfile")
+            let s:signfile = tempname().'_'
+        endif
+        redir =>a|exe "sil sign place buffer=".bufnr('')|redir end
+        let signs = split(a, "\n")[1:]
+        if !empty(signs)
+            let bufnr = bufnr('')
+            exe ":sil SaveSigns!" s:signfile.bufnr('')
+            if bufnr('') != bufnr
+                exe "noa wq"
+            endif
+            sign unplace *
+        elseif filereadable(s:signfile.bufnr(''))
+            exe "so" s:signfile.bufnr('')
+            call delete(s:signfile.bufnr(''))
+        endif
+    endfunction
 " }
 
 " Environment {
@@ -82,6 +104,8 @@
     imap OB <C-o>j
     imap OC <C-o>l
     imap OD <C-o>h
+
+    nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
     autocmd FileType rst nmap <leader>R :call PreviewRst2Html()<CR>
