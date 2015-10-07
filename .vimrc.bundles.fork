@@ -2,7 +2,7 @@
 Bundle 'maxbrunsfeld/vim-yankstack'
 call yankstack#setup()
 
-UnBundle 'spf13/vim-autoclose'
+UnBundle 'jiangmiao/auto-pairs'
 UnBundle 'gorodinskiy/vim-coloresque'
 UnBundle 'pythoncomplete'
 
