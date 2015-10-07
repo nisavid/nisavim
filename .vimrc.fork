@@ -78,17 +78,24 @@
 " Formatting {
     set wrap
 
-    autocmd FileType gitcommit,html,rst setlocal textwidth=72
-    autocmd FileType conf,json,python,ruby,sh,sls setlocal textwidth=79
+    autocmd FileType gitcommit,rst setlocal textwidth=72
+    autocmd FileType coffee,conf,haml,html,jade,javascript,json,python,ruby,sh,sls
+      \ setlocal textwidth=94
     set colorcolumn=+1
 
-    autocmd FileType gitcommit,html,json,rst setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst
+      \ setlocal expandtab shiftwidth=2 softtabstop=2
 
-    " defined in ~/.vimrc
-    autocmd FileType rst,ruby autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    " NOTE: StripTrailingWhitespace is defined in ~/.vimrc
+    autocmd FileType coffee,css,eruby,haml,html,jade,javascript,rst,ruby
+      \ autocmd BufWritePre <buffer>
+          \ if !exists('g:spf13_keep_trailing_whitespace')
+          \ | call StripTrailingWhitespace()
+          \ | endif
 
     " do not auto-wrap according to ``textwidth`` within these file types
-    autocmd FileType conf,python,rst,ruby,sh,sls setlocal formatoptions-=t
+    autocmd FileType coffee,conf,haml,html,jade,javascript,python,rst,ruby,sh,sls
+      \ setlocal formatoptions-=t
 
     set tildeop
 " }
