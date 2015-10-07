@@ -10,4 +10,5 @@ cd ~/.spf13-vim-3 \
      } \
   && vim +BundleInstall! \
   && vim +BundleClean! +NeoBundleUpdate +qa \
+  && vim +UpdateRemotePlugins +qa \
   && vim '+PromptlineSnapshot! ~/.promptline.sh airline' +q
