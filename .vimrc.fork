@@ -160,6 +160,20 @@
         let g:neocomplete#disable_auto_complete = 1
         inoremap <expr><C-n> neocomplete#start_manual_complete()
         inoremap <expr><C-y> neocomplete#close_popup()
+
+    " Neomake {
+        autocmd! BufRead,BufNewFile * Neomake
+        autocmd! BufWritePost * Neomake
+
+        let g:neomake_open_list = 2
+        let g:neomake_list_height = 3
+
+        let g:neomake_ruby_mri_maker = {
+          \ 'args': ['-c', '-T1'],
+          \ }
+        let g:neomake_ruby_rubocop_maker = {
+          \ 'args': ['--format', 'emacs', '--rails'],
+          \ }
     " }
 
     " NERDtree {
@@ -264,35 +278,125 @@
     " }
 
     " Syntastic {
-        let g:syntastic_aggregate_errors = 1
         let g:syntastic_check_on_open = 1
-        let g:syntastic_check_on_wq = 0
+        let g:syntastic_check_on_wq = 1
         let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_auto_loc_list = 1
-        let g:syntastic_loc_list_height = 6
 
-        let g:syntastic_shell = '/usr/bin/zsh'
-        let g:syntastic_python_python_exec = '/usr/bin/python3'
-        let g:syntastic_python_checkers = ['pylama']
+        let g:syntastic_aggregate_errors = 1
+        let g:syntastic_auto_loc_list = 0
+        let g:syntastic_loc_list_height = 3
+        let g:syntastic_shell = '/usr/bin/env bash'
+        let g:syntastic_enable_ballons = has('ballon_eval')
+        let g:syntastic_error_symbol = '✗'
+        let g:syntastic_warning_symbol = '⚠'
+        let g:syntastic_style_error_symbol = '✗'
+        let g:syntastic_style_warning_symbol = '⚠'
 
-        " rationale:
+        let g:syntastic_chef_checkers = ['foodcritic']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_coffee_checkers = ['coffeelint']
+        let g:syntastic_coffee_checkers = []
+
+        let g:syntastic_haml_checkers = ['haml_lint']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_html_checkers = ['tidy']
+        let g:syntastic_html_checkers = []
+        let g:syntastic_html_tidy_quiet_messages = {
+            \ 'regex': '\v(proprietary attribute \"(ng\-.*|count|rel|when)\"'
+            \           . '|trimming empty \<'
+            \           . '|is not recognized\!'
+            \           . '|discarding unexpected \<'
+            \           . "|\\'\\<\\' \\+ \\'\\/\\' \\+ letter not allowed here"
+            \           . ')',
+            \ }
+        " proprietary attribute
+        "   Angular attributes
         "
-        "   E127
-        "     pep8 rejects some reasonable forms of visual indentation
+        " trimming empty <
+        "   common pattern in Angular
         "
-        "   E211
-        "     pep8 rejects whitespace before a call's left parenthesis even if
-        "     it follows a line continuation.  placing it there helps to
-        "     identify the arguments
-        "
-        "   W404
-        "     pyflakes rejects 'from ... import *' even in init modules that
-        "     are including some of their children.  extracting code to
-        "     private modules and including them in their parents helps to
-        "     organize the code
-        let g:syntastic_quiet_messages = {
+        " is not recognized!
+        " discarding unexpected <
+        "   custom components
+
+        let g:syntastic_jade_checkers = ['jade_lint']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_javascript_checkers = ['eslint']
+        let g:syntastic_javascript_checkers = []
+        let g:syntastic_javascript_eslint_exec = 'eslint_d'
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_json_checkers = ['jsonlint']
+        let g:syntastic_json_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_lua_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_puppet_checkers = ['puppetlint']
+        let g:syntastic_puppet_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_python_checkers = ['pylama']
+        let g:syntastic_python_checkers = []
+        let g:syntastic_python_python_exec = 'python3'
+        let g:syntastic_python_pylama_quiet_messages = {
             \ 'regex': '\vE127|E211|W404'
             \ }
+        " E127
+        "   pep8 rejects some reasonable forms of visual indentation
+        "
+        " E211
+        "   pep8 rejects whitespace before a call's left parenthesis even if
+        "   it follows a line continuation.  placing it there helps to
+        "   identify the arguments
+        "
+        " W404
+        "   pyflakes rejects 'from ... import *' even in init modules that
+        "   are including some of their children.  extracting code to
+        "   private modules and including them in their parents helps to
+        "   organize the code
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_rst_checkers = ['rstcheck']
+        let g:syntastic_rst_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_ruby_checkers = ['rubocop']
+        let g:syntastic_ruby_checkers = []
+        let g:syntastic_ruby_rubocop_quiet_messages = {
+            \ 'regex': '\vLine is too long'
+                     \ . '|Missing top-level .+ documentation'
+                     \ . '|Missing space after \#'
+                     \ . '|Avoid comma after the last item of a hash'
+                     \ . '|Use \`each_with_object\` instead of \`inject\`'
+                     \ . '|Name \`inject\` block params \`.+\`',
+            \ }
+                     "\ . '|Use \d+ \(not \d+\) spaces for indenting an expression spanning multiple lines'
+
+        let g:syntastic_sass_checkers = ['sassc']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_scss_checkers = ['scss_lint']
+        let g:syntastic_scss_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_sh_checkers = ['shellcheck', 'bashate']
+        let g:syntastic_sh_checkers = []
+
+        let g:syntastic_text_checkers = ['atdtool']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_vim_checkers = ['vimlint']
+        " vint seems to be broken with Python 3.5 (as of 2015-10-01)
+        let g:syntastic_vim_checkers = []
+
+        let g:syntastic_yaml_checkers = ['jsyaml']
+
+        "let g:syntastic_debug = 3
     " }
 
     " Tabmerge {
