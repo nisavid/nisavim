@@ -168,6 +168,9 @@
         let g:neomake_open_list = 2
         let g:neomake_list_height = 3
 
+        let g:neomake_error_sign = { 'text': '✗', 'texthl': 'Error', }
+        let g:neomake_warning_sign = { 'text': '⚠', 'texthl': 'Todo', }
+
         let g:neomake_ruby_mri_maker = {
           \ 'args': ['-c', '-T1'],
           \ }
