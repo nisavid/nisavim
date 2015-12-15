@@ -295,13 +295,39 @@
         let g:syntastic_style_error_symbol = '✗'
         let g:syntastic_style_warning_symbol = '⚠'
 
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_c_checkers = []
+
         let g:syntastic_chef_checkers = ['foodcritic']
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_coffee_checkers = ['coffeelint']
         let g:syntastic_coffee_checkers = []
 
-        let g:syntastic_haml_checkers = ['haml_lint']
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_cpp_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_cs_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_d_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_elixir_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_erlang_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_go_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_haml_checkers = ['haml_lint']
+        let g:syntastic_haml_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_haskell_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_html_checkers = ['tidy']
@@ -324,7 +350,12 @@
         " discarding unexpected <
         "   custom components
 
-        let g:syntastic_jade_checkers = ['jade_lint']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_jade_checkers = ['jade_lint']
+        let g:syntastic_jade_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_java_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_javascript_checkers = ['eslint']
@@ -336,7 +367,16 @@
         let g:syntastic_json_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_jsx_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_less_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_lua_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_php_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_puppet_checkers = ['puppetlint']
@@ -383,6 +423,9 @@
         let g:syntastic_sass_checkers = ['sassc']
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_scala_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         "let g:syntastic_scss_checkers = ['scss_lint']
         let g:syntastic_scss_checkers = []
 
@@ -390,7 +433,16 @@
         "let g:syntastic_sh_checkers = ['shellcheck', 'bashate']
         let g:syntastic_sh_checkers = []
 
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_sml_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_tex_checkers = []
+
         let g:syntastic_text_checkers = ['atdtool']
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_typescript_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_vim_checkers = ['vimlint']
@@ -398,6 +450,10 @@
         let g:syntastic_vim_checkers = []
 
         let g:syntastic_yaml_checkers = ['jsyaml']
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_zsh_checkers = ['zsh']
+        let g:syntastic_zsh_checkers = []
 
         "let g:syntastic_debug = 3
     " }
