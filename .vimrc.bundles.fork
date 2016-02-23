@@ -6,8 +6,6 @@ UnBundle 'jiangmiao/auto-pairs'
 UnBundle 'gorodinskiy/vim-coloresque'
 UnBundle 'pythoncomplete'
 
-Bundle 'Shougo/unite.vim'
-
 Bundle 'chase/vim-ansible-yaml'
 Bundle 'camelcasemotion'
 Bundle 'Raimondi/delimitMate'
@@ -24,6 +22,7 @@ Bundle 'nisavid/SaveSigns.vim'
 Bundle 'justinmk/vim-sneak'
 Bundle 'sudo.vim'
 Bundle 'Tabmerge'
+Bundle 'Shougo/unite.vim'
 Bundle 'janko-m/vim-test'
 Bundle 'BenBergman/vsearch.vim'
 

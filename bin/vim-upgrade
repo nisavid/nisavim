@@ -1,13 +1,15 @@
 #!/bin/sh
-
 # Upgrade Vim
 
-ok=1
-cd ~/.spf13-vim-3 \
-  && { git pull || unset ok
-       cd - > /dev/null
-       [ "$ok" ] || false
-     } \
-  && vim +BundleInstall! \
-  && vim +BundleClean! +NeoBundleUpdate +qa \
-  && vim '+PromptlineSnapshot! ~/.promptline.sh airline' +q
+set -e
+
+ok=true
+cd ~/.spf13-vim-3
+{
+    git pull || unset ok
+    cd - >/dev/null
+    [ "$ok" ] || false
+}
+vim +BundleInstall!
+vim +BundleClean! +NeoBundleUpdate +qa
+vim '+PromptlineSnapshot! ~/.promptline.sh airline' +q
