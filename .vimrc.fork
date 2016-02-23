@@ -57,8 +57,11 @@
 " }
 
 " File types {
+    autocmd BufRead,BufNewFile *.gitignore* set filetype=conf
     autocmd BufRead,BufNewFile *.il set filetype=ocean
     autocmd BufRead,BufNewFile *.ocn set filetype=ocean
+    autocmd BufRead,BufNewFile *.pryrc* set filetype=ruby
+    autocmd BufRead,BufNewFile *.railsrc* set filetype=ruby
 " }
 
 " Vim UI {
@@ -147,6 +150,9 @@
 
     " deoplete {
         let g:deoplete#enable_at_startup = 1
+
+    " emmet {
+        let g:user_emmet_leader_key='<M-y>'
     " }
 
     " Fugitive {
@@ -310,6 +316,9 @@
         let g:syntastic_style_warning_symbol = '⚠'
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_ada_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_c_checkers = []
 
         let g:syntastic_chef_checkers = ['foodcritic']
@@ -365,10 +374,6 @@
         "   custom components
 
         " NOTE: disabled in favor of Neomake
-        "let g:syntastic_jade_checkers = ['jade_lint']
-        let g:syntastic_jade_checkers = []
-
-        " NOTE: disabled in favor of Neomake
         let g:syntastic_java_checkers = []
 
         " NOTE: disabled in favor of Neomake
@@ -390,7 +395,14 @@
         let g:syntastic_lua_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_markdown_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_php_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_pug_checkers = ['pug_lint']
+        let g:syntastic_pug_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_puppet_checkers = ['puppetlint']
