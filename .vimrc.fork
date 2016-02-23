@@ -56,8 +56,11 @@
 " }
 
 " File types {
+    autocmd BufRead,BufNewFile *.gitignore* set filetype=conf
     autocmd BufRead,BufNewFile *.il set filetype=ocean
     autocmd BufRead,BufNewFile *.ocn set filetype=ocean
+    autocmd BufRead,BufNewFile *.pryrc* set filetype=ruby
+    autocmd BufRead,BufNewFile *.railsrc* set filetype=ruby
 " }
 
 " Vim UI {
