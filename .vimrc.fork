@@ -144,6 +144,10 @@
         map ;e <Plug>CamelCaseMotion_e
     " }
 
+    " emmet {
+        let g:user_emmet_leader_key='<M-y>'
+    " }
+
     " Fugitive {
         nunmap <leader>gs
         nunmap <leader>gd
