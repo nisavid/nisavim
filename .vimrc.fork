@@ -55,6 +55,9 @@
     set viminfo='10,\"100,:20,%,n~/.viminfo
 
     set sessionoptions=curdir,folds,help,localoptions,tabpages,winsize
+
+    set history=10000
+    set tabpagemax=50
 " }
 
 " File types {
