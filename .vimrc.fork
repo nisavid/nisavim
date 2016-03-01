@@ -1,3 +1,5 @@
+" Vim config | nisavim
+
 " Helpers {
     function PreviewRst2Html()
         let outfile = tempname()
@@ -54,6 +56,9 @@
     set viminfo='10,\"100,:20,%,n~/.viminfo
 
     set sessionoptions=curdir,folds,help,localoptions,tabpages,winsize
+
+    set history=10000
+    set tabpagemax=50
 " }
 
 " File types {
@@ -62,6 +67,7 @@
     autocmd BufRead,BufNewFile *.ocn set filetype=ocean
     autocmd BufRead,BufNewFile *.pryrc* set filetype=ruby
     autocmd BufRead,BufNewFile *.railsrc* set filetype=ruby
+    autocmd BufRead,BufNewFile Gemfile* set filetype=ruby
 " }
 
 " Vim UI {

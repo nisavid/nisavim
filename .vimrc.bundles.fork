@@ -1,3 +1,4 @@
+" Vim config | bundles | nisavim
 
 Bundle 'maxbrunsfeld/vim-yankstack'
 call yankstack#setup()

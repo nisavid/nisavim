@@ -1,3 +1,5 @@
+" Vim config | before bundles | nisavim
+
 let g:spf13_bundle_groups=
         \['general',
          \'misc',
