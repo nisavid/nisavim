@@ -66,6 +66,7 @@
     autocmd BufRead,BufNewFile *.ocn set filetype=ocean
     autocmd BufRead,BufNewFile *.pryrc* set filetype=ruby
     autocmd BufRead,BufNewFile *.railsrc* set filetype=ruby
+    autocmd BufRead,BufNewFile Gemfile* set filetype=ruby
 " }
 
 " Vim UI {
