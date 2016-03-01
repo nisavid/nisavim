@@ -1,3 +1,5 @@
+" Vim config | nisavim
+
 " Helpers {
     function PreviewRst2Html()
         let outfile = tempname()
