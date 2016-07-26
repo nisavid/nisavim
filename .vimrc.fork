@@ -155,6 +155,11 @@
 " }
 
 " Plugins {
+    " accelerated-jk {
+        nmap j <Plug>(accelerated_jk_gj)
+        nmap k <Plug>(accelerated_jk_gk)
+    " }
+
     " AutoClose {
         let g:autoclose_on = 0
         let g:autoclose_vim_commentmode = 1
@@ -171,6 +176,14 @@
         map <leader>xn <Plug>conflict-marker-none
         map <leader>xo <Plug>conflict-marker-ourselves
         map <leader>xt <Plug>conflict-marker-themselves
+    " }
+
+    " devdocs {
+        augroup plugin-devdocs
+            autocmd!
+            autocmd FileType c,cpp,css,html,javascript,python,ruby
+              \ nmap <buffer>K <Plug>(devdocs-under-cursor)
+        augroup END
     " }
 
     " emmet {
