@@ -94,11 +94,11 @@
     set wrap
 
     autocmd FileType gitcommit,rst setlocal textwidth=72
-    autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,ruby,sass,scss,sh,sls,svg
+    autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,ruby,sass,scss,sh,sls,svg,yaml
       \ setlocal textwidth=94
     set colorcolumn=+1
 
-    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby
+    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby,yaml
       \ setlocal expandtab shiftwidth=2 softtabstop=2
 
     " NOTE: StripTrailingWhitespace is defined in ~/.vimrc
