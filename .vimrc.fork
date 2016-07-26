@@ -166,6 +166,13 @@
         map ;e <Plug>CamelCaseMotion_e
     " }
 
+    " conflict-marker {
+        map <leader>xb <Plug>conflict-marker-both
+        map <leader>xn <Plug>conflict-marker-none
+        map <leader>xo <Plug>conflict-marker-ourselves
+        map <leader>xt <Plug>conflict-marker-themselves
+    " }
+
     " emmet {
         let g:user_emmet_leader_key='<M-y>'
     " }
