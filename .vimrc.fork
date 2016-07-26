@@ -52,6 +52,8 @@
 " General {
     set nohidden
 
+    set backupskip=/tmp/*,/private/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
+
     " restore per-file state on re-open
     set viewoptions=cursor,folds,slash,unix
     set viminfo='10,\"100,:20,%,n~/.viminfo
