@@ -227,8 +227,16 @@
         let g:neomake_open_list = 2
         let g:neomake_list_height = 3
 
-        let g:neomake_error_sign = { 'text': '✗', 'texthl': 'Error', }
-        let g:neomake_warning_sign = { 'text': '⚠', 'texthl': 'Todo', }
+        "let g:neomake_error_sign = { 'text': '✗', 'texthl': 'Error', }
+        "let g:neomake_warning_sign = { 'text': '⚠', 'texthl': 'Todo', }
+        let g:neomake_error_sign = {
+          \ 'text': emoji#for('x'),
+          \ 'texthl': 'Error',
+          \ }
+        let g:neomake_warning_sign = {
+          \ 'text': emoji#for('warning'),
+          \ 'texthl': 'Todo',
+          \ }
 
         let g:neomake_ruby_mri_maker = {
           \ 'args': ['-c', '-T1'],
@@ -320,6 +328,18 @@
         nmap <leader>SS :SessionSave<CR>
     " }
 
+    " signify {
+        " TODO:
+        "   figure out why setting an emoji for g:signify_sign_delete
+        "   leads to errors if this is enabled
+        let g:signify_sign_show_count = 0
+
+        let g:signify_sign_add = emoji#for('small_blue_diamond')
+        let g:signify_sign_change = emoji#for('small_orange_diamond')
+        let g:signify_sign_delete = emoji#for('small_red_triangle_down')
+        let g:signify_sign_changedelete = emoji#for('small_red_triangle')
+    " }
+
     " Sneak {
         let g:sneak#streak = 1
         nmap f <Plug>Sneak_f
@@ -350,10 +370,15 @@
         let g:syntastic_loc_list_height = 3
         let g:syntastic_shell = '/usr/bin/env bash'
         let g:syntastic_enable_ballons = has('ballon_eval')
-        let g:syntastic_error_symbol = '✗'
-        let g:syntastic_warning_symbol = '⚠'
-        let g:syntastic_style_error_symbol = '✗'
-        let g:syntastic_style_warning_symbol = '⚠'
+
+        "let g:syntastic_error_symbol = '✗'
+        "let g:syntastic_warning_symbol = '⚠'
+        "let g:syntastic_style_error_symbol = '✗'
+        "let g:syntastic_style_warning_symbol = '⚠'
+        let g:syntastic_error_symbol = emoji#for('x')
+        let g:syntastic_warning_symbol = emoji#for('warning')
+        let g:syntastic_style_error_symbol = emoji#for('x')
+        let g:syntastic_style_warning_symbol = emoji#for('warning')
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_ada_checkers = []
