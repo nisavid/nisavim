@@ -5,6 +5,17 @@
         return vital#of('vital').import('ColorEcho').echo(a:str)
     endfunction
 
+    " FIXME
+    "function CenterCurrentWindow(width)
+    "    let margin_width = (winwidth(0) - a:width) / 2
+    "    leftabove vnew
+    "    vertical resize margin_width
+    "    wincmd l
+    "    vnew
+    "    vertical resize margin_width
+    "    wincmd h
+    "endfunction
+
     function PreviewRst2Html()
         let outfile = tempname()
         let time_outfile = tempname()
@@ -149,6 +160,8 @@
 
     nmap <leader><C-l> :echo expand('%:p')<CR>
     nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
+    " FIXME
+    "nmap <C-s> :call CenterCurrentWindow(100)<CR>
 
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
     autocmd FileType rst nmap <leader>R :call PreviewRst2Html()<CR>
