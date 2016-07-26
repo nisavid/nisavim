@@ -1,20 +1,30 @@
 " Vim config | nisavim
 
 " Helpers {
+    function ColorEcho(str)
+        return vital#of('vital').import('ColorEcho').echo(a:str)
+    endfunction
+
     function PreviewRst2Html()
         let outfile = tempname()
         let time_outfile = tempname()
-        silent execute "!{ time ( rst2html5 " . expand("%:r") . ".{rst,html} && open " . expand("%:r") . ".html && cat " . expand("%:r") . ".html ) &> '" . outfile . "'; } 2> '" . time_outfile . "'"
-        execute "!clear; cat '" . outfile . "'; echo -e '\\n\\n'; cat '" . time_outfile . "'"
+        silent execute
+          \ "!{ time ( rst2html5 " . expand("%:r") . ".{rst,html} && open " . expand("%:r") . ".html && cat " . expand("%:r") . ".html ) &> '" . outfile . "'; } 2> '" . time_outfile . "'"
+        call ColorEcho(system(
+          \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
+          \ ))
         call delete(outfile)
         call delete(time_outfile)
     endfunction
 
-    function RunWith(command)
+    function RunWith(cmd)
         let outfile = tempname()
         let time_outfile = tempname()
-        silent execute "!{ time " . a:command . " " . expand("%") . " &> '" . outfile . "'; } 2> '" . time_outfile . "'"
-        execute "!clear; cat '" . outfile . "'; echo -e '\\n\\n'; cat '" . time_outfile . "'"
+        silent execute
+          \ "!{ time " . a:cmd . " " . expand("%") . " &> '" . outfile . "'; } 2> '" . time_outfile . "'"
+        call ColorEcho(system(
+          \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
+          \ ))
         call delete(outfile)
         call delete(time_outfile)
     endfunction
@@ -50,6 +60,8 @@
 
 " General {
     set nohidden
+
+    set backupskip=/tmp/*,/private/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*
 
     " restore per-file state on re-open
     set viewoptions=cursor,folds,slash,unix
@@ -91,11 +103,11 @@
     set wrap
 
     autocmd FileType gitcommit,rst setlocal textwidth=72
-    autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,ruby,sass,scss,sh,sls,svg
+    autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,ruby,sass,scss,sh,sls,svg,yaml
       \ setlocal textwidth=94
     set colorcolumn=+1
 
-    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby
+    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby,yaml
       \ setlocal expandtab shiftwidth=2 softtabstop=2
 
     " NOTE: StripTrailingWhitespace is defined in ~/.vimrc
@@ -135,6 +147,7 @@
     imap OC <C-o>l
     imap OD <C-o>h
 
+    nmap <leader><C-l> :echo expand('%:p')<CR>
     nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
@@ -143,6 +156,11 @@
 " }
 
 " Plugins {
+    " accelerated-jk {
+        nmap j <Plug>(accelerated_jk_gj)
+        nmap k <Plug>(accelerated_jk_gk)
+    " }
+
     " AutoClose {
         let g:autoclose_on = 0
         let g:autoclose_vim_commentmode = 1
@@ -154,8 +172,24 @@
         map ;e <Plug>CamelCaseMotion_e
     " }
 
+    " conflict-marker {
+        map <leader>xb <Plug>conflict-marker-both
+        map <leader>xn <Plug>conflict-marker-none
+        map <leader>xo <Plug>conflict-marker-ourselves
+        map <leader>xt <Plug>conflict-marker-themselves
+    " }
+
     " deoplete {
         let g:deoplete#enable_at_startup = 1
+    " }
+
+    " devdocs {
+        augroup plugin-devdocs
+            autocmd!
+            autocmd FileType c,cpp,css,html,javascript,python,ruby
+              \ nmap <buffer>K <Plug>(devdocs-under-cursor)
+        augroup END
+    " }
 
     " emmet {
         let g:user_emmet_leader_key='<M-y>'
@@ -193,8 +227,16 @@
         let g:neomake_open_list = 2
         let g:neomake_list_height = 3
 
-        let g:neomake_error_sign = { 'text': '✗', 'texthl': 'Error', }
-        let g:neomake_warning_sign = { 'text': '⚠', 'texthl': 'Todo', }
+        "let g:neomake_error_sign = { 'text': '✗', 'texthl': 'Error', }
+        "let g:neomake_warning_sign = { 'text': '⚠', 'texthl': 'Todo', }
+        let g:neomake_error_sign = {
+          \ 'text': emoji#for('x'),
+          \ 'texthl': 'Error',
+          \ }
+        let g:neomake_warning_sign = {
+          \ 'text': emoji#for('warning'),
+          \ 'texthl': 'Todo',
+          \ }
 
         let g:neomake_ruby_mri_maker = {
           \ 'args': ['-c', '-T1'],
@@ -286,6 +328,18 @@
         nmap <leader>SS :SessionSave<CR>
     " }
 
+    " signify {
+        " TODO:
+        "   figure out why setting an emoji for g:signify_sign_delete
+        "   leads to errors if this is enabled
+        let g:signify_sign_show_count = 0
+
+        let g:signify_sign_add = emoji#for('small_blue_diamond')
+        let g:signify_sign_change = emoji#for('small_orange_diamond')
+        let g:signify_sign_delete = emoji#for('small_red_triangle_down')
+        let g:signify_sign_changedelete = emoji#for('small_red_triangle')
+    " }
+
     " Sneak {
         let g:sneak#streak = 1
         nmap f <Plug>Sneak_f
@@ -316,13 +370,21 @@
         let g:syntastic_loc_list_height = 3
         let g:syntastic_shell = '/usr/bin/env bash'
         let g:syntastic_enable_ballons = has('ballon_eval')
-        let g:syntastic_error_symbol = '✗'
-        let g:syntastic_warning_symbol = '⚠'
-        let g:syntastic_style_error_symbol = '✗'
-        let g:syntastic_style_warning_symbol = '⚠'
+
+        "let g:syntastic_error_symbol = '✗'
+        "let g:syntastic_warning_symbol = '⚠'
+        "let g:syntastic_style_error_symbol = '✗'
+        "let g:syntastic_style_warning_symbol = '⚠'
+        let g:syntastic_error_symbol = emoji#for('x')
+        let g:syntastic_warning_symbol = emoji#for('warning')
+        let g:syntastic_style_error_symbol = emoji#for('x')
+        let g:syntastic_style_warning_symbol = emoji#for('warning')
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_ada_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_applescript_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_c_checkers = []
@@ -338,6 +400,12 @@
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_cs_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_css_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_cuda_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_d_checkers = []
@@ -404,6 +472,15 @@
         let g:syntastic_markdown_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_nix_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_node_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_perl_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_php_checkers = []
 
         " NOTE: disabled in favor of Neomake
@@ -452,7 +529,9 @@
           \ }
           "\          . '|Use \d+ \(not \d+\) spaces for indenting an expression spanning multiple lines'
 
-        let g:syntastic_sass_checkers = ['sassc']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_sass_checkers = ['sassc']
+        let g:syntastic_sass_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_scala_checkers = []
@@ -469,9 +548,20 @@
         let g:syntastic_sml_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_slim_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_sql_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_stylus_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_tex_checkers = []
 
-        let g:syntastic_text_checkers = ['atdtool']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_text_checkers = ['atdtool']
+        let g:syntastic_text_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_typescript_checkers = []
@@ -481,7 +571,9 @@
         " vint seems to be broken with Python 3.5 (as of 2015-10-01)
         let g:syntastic_vim_checkers = []
 
-        let g:syntastic_yaml_checkers = ['jsyaml']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_yaml_checkers = ['jsyaml']
+        let g:syntastic_yaml_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_zsh_checkers = ['zsh']

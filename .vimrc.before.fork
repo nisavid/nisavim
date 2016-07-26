@@ -14,5 +14,9 @@ let g:spf13_bundle_groups=
          \'scala',
          \'twig',
          \]
+
 "let g:spf13_use_powerline=0
 let g:airline_powerline_fonts=1
+
+let g:spf13_apply_config_mapping = '<leader>vrcr'
+let g:spf13_edit_config_mapping = '<leader>vrce'
