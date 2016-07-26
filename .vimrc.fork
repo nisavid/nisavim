@@ -384,6 +384,9 @@
         let g:syntastic_ada_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_applescript_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_c_checkers = []
 
         let g:syntastic_chef_checkers = ['foodcritic']
@@ -397,6 +400,12 @@
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_cs_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_css_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_cuda_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_d_checkers = []
@@ -463,6 +472,15 @@
         let g:syntastic_markdown_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_nix_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_node_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_perl_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_php_checkers = []
 
         " NOTE: disabled in favor of Neomake
@@ -511,7 +529,9 @@
           \ }
           "\          . '|Use \d+ \(not \d+\) spaces for indenting an expression spanning multiple lines'
 
-        let g:syntastic_sass_checkers = ['sassc']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_sass_checkers = ['sassc']
+        let g:syntastic_sass_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_scala_checkers = []
@@ -528,9 +548,20 @@
         let g:syntastic_sml_checkers = []
 
         " NOTE: disabled in favor of Neomake
+        let g:syntastic_slim_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_sql_checkers = []
+
+        " NOTE: disabled in favor of Neomake
+        let g:syntastic_stylus_checkers = []
+
+        " NOTE: disabled in favor of Neomake
         let g:syntastic_tex_checkers = []
 
-        let g:syntastic_text_checkers = ['atdtool']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_text_checkers = ['atdtool']
+        let g:syntastic_text_checkers = []
 
         " NOTE: disabled in favor of Neomake
         let g:syntastic_typescript_checkers = []
@@ -540,7 +571,9 @@
         " vint seems to be broken with Python 3.5 (as of 2015-10-01)
         let g:syntastic_vim_checkers = []
 
-        let g:syntastic_yaml_checkers = ['jsyaml']
+        " NOTE: disabled in favor of Neomake
+        "let g:syntastic_yaml_checkers = ['jsyaml']
+        let g:syntastic_yaml_checkers = []
 
         " NOTE: disabled in favor of Neomake
         "let g:syntastic_zsh_checkers = ['zsh']
