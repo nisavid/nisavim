@@ -26,6 +26,8 @@ Bundle 'sudo.vim'
 Bundle 'Tabmerge'
 Bundle 'Shougo/unite.vim'
 Bundle 'janko-m/vim-test'
+Bundle 'vim-jp/vital.vim'
+Bundle 'rhysd/vital-color-echo'
 Bundle 'BenBergman/vsearch.vim'
 
 Bundle 'Shougo/neobundle.vim'

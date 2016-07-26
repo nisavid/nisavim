@@ -1,12 +1,18 @@
 " Vim config | nisavim
 
 " Helpers {
+    function ColorEcho(str)
+        return vital#of('vital').import('ColorEcho').echo(a:str)
+    endfunction
+
     function PreviewRst2Html()
         let outfile = tempname()
         let time_outfile = tempname()
         silent execute
           \ "!{ time ( rst2html5 " . expand("%:r") . ".{rst,html} && open " . expand("%:r") . ".html && cat " . expand("%:r") . ".html ) &> '" . outfile . "'; } 2> '" . time_outfile . "'"
-        execute "!clear; cat '" . outfile . "'; echo -e '\\n\\n'; cat '" . time_outfile . "'"
+        call ColorEcho(system(
+          \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
+          \ ))
         call delete(outfile)
         call delete(time_outfile)
     endfunction
@@ -16,7 +22,9 @@
         let time_outfile = tempname()
         silent execute
           \ "!{ time " . a:cmd . " " . expand("%") . " &> '" . outfile . "'; } 2> '" . time_outfile . "'"
-        execute "!clear; cat '" . outfile . "'; echo -e '\\n\\n'; cat '" . time_outfile . "'"
+        call ColorEcho(system(
+          \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
+          \ ))
         call delete(outfile)
         call delete(time_outfile)
     endfunction
