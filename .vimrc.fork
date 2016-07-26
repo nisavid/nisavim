@@ -138,6 +138,7 @@
     imap OC <C-o>l
     imap OD <C-o>h
 
+    nmap <leader><C-l> :echo expand('%:p')<CR>
     nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
