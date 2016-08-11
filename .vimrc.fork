@@ -103,7 +103,7 @@
 
     autocmd FileType gitcommit,rst setlocal textwidth=72
     autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,ruby,sass,scss,sh,sls,svg,yaml
-      \ setlocal textwidth=94
+      \ setlocal textwidth=92
     set colorcolumn=+1
 
     autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby,yaml
