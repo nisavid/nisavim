@@ -238,6 +238,8 @@
           \ 'texthl': 'Todo',
           \ }
 
+        " TODO: make rubylint maker work with Rails engines, then re-enable it
+        let g:neomake_ruby_enabled_makers = ['mri', 'rubocop', 'reek']
         let g:neomake_ruby_mri_maker = {
           \ 'exe': 'ruby',
           \ 'args': ['-c', '-T1'],
