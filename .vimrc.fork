@@ -82,6 +82,12 @@
 " }
 
 " Vim UI {
+    set foldlevel=0
+    autocmd Syntax c,coffee,conf,cpp,css,eruby,gitcommit,haml,html,jade,javascript,json,markdown,perl,python,rst,ruby,sass,scss,sh,sls,svg,text,vim,xhtml,xml,yaml
+      \ setlocal foldmethod=syntax
+    autocmd Syntax c,coffee,conf,cpp,css,eruby,gitcommit,haml,html,jade,javascript,json,markdown,perl,python,rst,ruby,sass,scss,sh,sls,svg,text,vim,xhtml,xml,yaml
+      \ normal zR
+
     let g:local_ctermbg_altcolor =
       \ ((&background == "dark")? "black" : "lightgrey")
     let g:local_guibg_altcolor =
