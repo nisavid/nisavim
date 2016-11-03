@@ -5,11 +5,12 @@
         return vital#of('vital').import('ColorEcho').echo(a:str)
     endfunction
 
-    function PreviewRst2Html()
-        let outfile = tempname()
+    function PreviewRstAsHtml()
+        let infile = expand("%")
+        let outfile = tempname() . ".html"
         let time_outfile = tempname()
         silent execute
-          \ "!{ time ( rst2html5 " . expand("%:r") . ".{rst,html} && open " . expand("%:r") . ".html && cat " . expand("%:r") . ".html ) &> '" . outfile . "'; } 2> '" . time_outfile . "'"
+          \ "!{ time ( pandoc --from rst --to html5 '" . infile . "' --output '" . outfile . "' && open '" . outfile . "' && cat '" . outfile . "' ); } 2> '" . time_outfile . "'"
         call ColorEcho(system(
           \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
           \ ))
@@ -156,7 +157,7 @@
     nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
-    autocmd FileType rst nmap <leader>R :call PreviewRst2Html()<CR>
+    autocmd FileType rst nmap <leader>R :call PreviewRstAsHtml()<CR>
     autocmd FileType ruby nmap <leader>R :call RunWith("ruby")<CR>
 " }
 
