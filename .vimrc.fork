@@ -5,11 +5,25 @@
         return vital#of('vital').import('ColorEcho').echo(a:str)
     endfunction
 
-    function PreviewRst2Html()
-        let outfile = tempname()
+    function PreviewMarkdownAsHtml()
+        let infile = expand("%")
+        let outfile = tempname() . ".html"
         let time_outfile = tempname()
         silent execute
-          \ "!{ time ( rst2html5 " . expand("%:r") . ".{rst,html} && open " . expand("%:r") . ".html && cat " . expand("%:r") . ".html ) &> '" . outfile . "'; } 2> '" . time_outfile . "'"
+          \ "!{ time ( pandoc --from markdown --to html5 '" . infile . "' --output '" . outfile . "' && open '" . outfile . "' && cat '" . outfile . "' ); } 2> '" . time_outfile . "'"
+        call ColorEcho(system(
+          \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
+          \ ))
+        call delete(outfile)
+        call delete(time_outfile)
+    endfunction
+
+    function PreviewRstAsHtml()
+        let infile = expand("%")
+        let outfile = tempname() . ".html"
+        let time_outfile = tempname()
+        silent execute
+          \ "!{ time ( pandoc --from rst --to html5 '" . infile . "' --output '" . outfile . "' && open '" . outfile . "' && cat '" . outfile . "' ); } 2> '" . time_outfile . "'"
         call ColorEcho(system(
           \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
           \ ))
@@ -83,6 +97,12 @@
 " }
 
 " Vim UI {
+    set foldlevel=0
+    autocmd Syntax c,coffee,conf,cpp,css,eruby,gitcommit,haml,html,jade,javascript,json,markdown,perl,python,rst,ruby,sass,scss,sh,sls,svg,text,vim,xhtml,xml,yaml
+      \ setlocal foldmethod=syntax
+    autocmd Syntax c,coffee,conf,cpp,css,eruby,gitcommit,haml,html,jade,javascript,json,markdown,perl,python,rst,ruby,sass,scss,sh,sls,svg,text,vim,xhtml,xml,yaml
+      \ normal zR
+
     let g:local_ctermbg_altcolor =
       \ ((&background == "dark")? "black" : "lightgrey")
     let g:local_guibg_altcolor =
@@ -102,24 +122,24 @@
 " Formatting {
     set wrap
 
-    autocmd FileType gitcommit,rst setlocal textwidth=72
-    autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,ruby,sass,scss,sh,sls,svg,yaml
+    autocmd FileType gitcommit,markdown,rst,text setlocal textwidth=72
+    autocmd FileType c,coffee,conf,cpp,css,eruby,haml,html,jade,javascript,json,perl,python,ruby,sass,scss,sh,sls,svg,vim,xhtml,xml,yaml
       \ setlocal textwidth=92
     set colorcolumn=+1
 
-    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby,yaml
+    autocmd FileType coffee,eruby,gitcommit,html,javascript,json,rst,ruby,text,yaml
       \ setlocal expandtab shiftwidth=2 softtabstop=2
 
     " NOTE: StripTrailingWhitespace is defined in ~/.vimrc
-    autocmd FileType coffee,conf,css,eruby,haml,html,jade,javascript,json,python,rst,ruby,sass,scss,sh,sls,svg
+    autocmd FileType c,coffee,conf,cpp,css,eruby,gitcommit,haml,html,jade,javascript,json,markdown,perl,python,rst,ruby,sass,scss,sh,sls,svg,text,vim,xhtml,xml,yaml
       \ autocmd BufWritePre <buffer>
           \ if !exists('g:spf13_keep_trailing_whitespace')
           \ | call StripTrailingWhitespace()
           \ | endif
 
-    " do not auto-wrap according to ``textwidth`` within these file types
-    autocmd FileType coffee,conf,haml,html,jade,javascript,python,rst,ruby,sh,sls
-      \ setlocal formatoptions-=t
+    set formatoptions-=t
+    " auto-wrap according to ``textwidth`` within these file types
+    autocmd FileType gitcommit,markdown,rst,text setlocal formatoptions+=t
 
     set tildeop
 
@@ -150,8 +170,9 @@
     nmap <leader><C-l> :echo expand('%:p')<CR>
     nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
+    autocmd FileType markdown nmap <leader>R :call PreviewMarkdownAsHtml()<CR>
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
-    autocmd FileType rst nmap <leader>R :call PreviewRst2Html()<CR>
+    autocmd FileType rst nmap <leader>R :call PreviewRstAsHtml()<CR>
     autocmd FileType ruby nmap <leader>R :call RunWith("ruby")<CR>
 " }
 
