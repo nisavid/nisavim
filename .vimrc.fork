@@ -5,6 +5,19 @@
         return vital#of('vital').import('ColorEcho').echo(a:str)
     endfunction
 
+    function PreviewMarkdownAsHtml()
+        let infile = expand("%")
+        let outfile = tempname() . ".html"
+        let time_outfile = tempname()
+        silent execute
+          \ "!{ time ( pandoc --from markdown --to html5 '" . infile . "' --output '" . outfile . "' && open '" . outfile . "' && cat '" . outfile . "' ); } 2> '" . time_outfile . "'"
+        call ColorEcho(system(
+          \ "cat '" . outfile . "'; printf '\\n\\n'; cat '" . time_outfile . "'"
+          \ ))
+        call delete(outfile)
+        call delete(time_outfile)
+    endfunction
+
     function PreviewRstAsHtml()
         let infile = expand("%")
         let outfile = tempname() . ".html"
@@ -156,6 +169,7 @@
     nmap <leader><C-l> :echo expand('%:p')<CR>
     nmap <leader><C-x> :set number! relativenumber! \| call SignsToggle()<CR>
 
+    autocmd FileType markdown nmap <leader>R :call PreviewMarkdownAsHtml()<CR>
     autocmd FileType python nmap <leader>R :call RunWith("python")<CR>
     autocmd FileType rst nmap <leader>R :call PreviewRstAsHtml()<CR>
     autocmd FileType ruby nmap <leader>R :call RunWith("ruby")<CR>
