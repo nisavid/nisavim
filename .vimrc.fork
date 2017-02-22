@@ -226,6 +226,10 @@
         nnoremap <silent> <leader>Gp :Git push<CR>
     "}
 
+    " highlightedyank {
+        let g:highlightedyank_highlight_duration = 600
+    " }
+
     " indent_guides {
         let g:indent_guides_auto_colors = 0
         autocmd VimEnter,Colorscheme * :execute ':highlight IndentGuidesEven ctermbg=' . g:local_ctermbg_altcolor . ' guibg=' . g:local_guibg_altcolor
