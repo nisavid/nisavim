@@ -382,7 +382,9 @@
     " }
 
     " Sneak {
-        let g:sneak#streak = 1
+        let g:sneak#label = 1
+        nmap <leader>z <Plug>Sneak_s
+        nmap <leader>Z <Plug>Sneak_S
         nmap f <Plug>Sneak_f
         nmap F <Plug>Sneak_F
         xmap f <Plug>Sneak_f
