@@ -162,6 +162,12 @@
     nnoremap L gt
     nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
+    " TODO: Make these work
+    nnoremap ,, ,
+    xnoremap ,, ,
+    nnoremap ;; ;
+    xnoremap ;; ;
+
     imap OA <C-o>k
     imap OB <C-o>j
     imap OC <C-o>l
@@ -188,9 +194,15 @@
     " }
 
     " camelcasemotion {
-        map ;w <Plug>CamelCaseMotion_w
-        map ;b <Plug>CamelCaseMotion_b
-        map ;e <Plug>CamelCaseMotion_e
+        nmap ;w <Plug>CamelCaseMotion_w
+        xmap ;w <Plug>CamelCaseMotion_w
+        omap ;w <Plug>CamelCaseMotion_w
+        nmap ;b <Plug>CamelCaseMotion_b
+        xmap ;b <Plug>CamelCaseMotion_b
+        omap ;b <Plug>CamelCaseMotion_b
+        nmap ;e <Plug>CamelCaseMotion_e
+        xmap ;e <Plug>CamelCaseMotion_e
+        omap ;e <Plug>CamelCaseMotion_e
     " }
 
     " conflict-marker {
@@ -217,19 +229,24 @@
     " }
 
     " Fugitive {
-        nunmap <leader>gs
-        nunmap <leader>gd
-        nunmap <leader>gc
         nunmap <leader>gb
+        nunmap <leader>gc
+        nunmap <leader>gd
         nunmap <leader>gl
         nunmap <leader>gp
-        nnoremap <silent> <leader>Gs :Gstatus<CR>
-        nnoremap <silent> <leader>Gd :Gdiff<CR>
-        nnoremap <silent> <leader>Gc :Gcommit<CR>
+        nunmap <leader>gs
         nnoremap <silent> <leader>Gb :Gblame<CR>
+        nnoremap <silent> <leader>Gc :Gcommit<CR>
+        nnoremap <silent> <leader>Gd :Gdiff<CR>
         nnoremap <silent> <leader>Gl :Glog<CR>
         nnoremap <silent> <leader>Gp :Git push<CR>
+        nnoremap <silent> <leader>Gs :Gstatus<CR>
+        nnoremap <silent> <leader>Gw :Gbrowse<CR>
     "}
+
+    " highlightedyank {
+        let g:highlightedyank_highlight_duration = 600
+    " }
 
     " indent_guides {
         let g:indent_guides_auto_colors = 0
@@ -365,7 +382,9 @@
     " }
 
     " Sneak {
-        let g:sneak#streak = 1
+        let g:sneak#label = 1
+        nmap <leader>z <Plug>Sneak_s
+        nmap <leader>Z <Plug>Sneak_S
         nmap f <Plug>Sneak_f
         nmap F <Plug>Sneak_F
         xmap f <Plug>Sneak_f
