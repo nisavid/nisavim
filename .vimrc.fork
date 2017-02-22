@@ -114,6 +114,8 @@
 
     set cursorcolumn
 
+    set inccommand=split
+
     autocmd FileType python,rst,sh setlocal commentstring=#%s
 
     autocmd FileType python,rst,sh setlocal complete+=t
