@@ -161,6 +161,12 @@
     nnoremap L gt
     nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
+    " TODO: Make these work
+    nnoremap ,, ,
+    xnoremap ,, ,
+    nnoremap ;; ;
+    xnoremap ;; ;
+
     imap OA <C-o>k
     imap OB <C-o>j
     imap OC <C-o>l
