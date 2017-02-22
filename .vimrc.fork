@@ -193,9 +193,15 @@
     " }
 
     " camelcasemotion {
-        map ;w <Plug>CamelCaseMotion_w
-        map ;b <Plug>CamelCaseMotion_b
-        map ;e <Plug>CamelCaseMotion_e
+        nmap ;w <Plug>CamelCaseMotion_w
+        xmap ;w <Plug>CamelCaseMotion_w
+        omap ;w <Plug>CamelCaseMotion_w
+        nmap ;b <Plug>CamelCaseMotion_b
+        xmap ;b <Plug>CamelCaseMotion_b
+        omap ;b <Plug>CamelCaseMotion_b
+        nmap ;e <Plug>CamelCaseMotion_e
+        xmap ;e <Plug>CamelCaseMotion_e
+        omap ;e <Plug>CamelCaseMotion_e
     " }
 
     " conflict-marker {
