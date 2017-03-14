@@ -267,15 +267,21 @@
         let g:neomake_open_list = 2
         let g:neomake_list_height = 3
 
-        "let g:neomake_error_sign = { 'text': '✗', 'texthl': 'Error', }
-        "let g:neomake_warning_sign = { 'text': '⚠', 'texthl': 'Todo', }
         let g:neomake_error_sign = {
           \ 'text': emoji#for('x'),
-          \ 'texthl': 'Error',
+          \ 'texthl': 'NeomakeErrorSign',
           \ }
         let g:neomake_warning_sign = {
           \ 'text': emoji#for('warning'),
-          \ 'texthl': 'Todo',
+          \ 'texthl': 'NeomakeWarningSign',
+          \ }
+        let g:neomake_message_sign = {
+          \ 'text': emoji#for('memo'),
+          \ 'texthl': 'NeomakeMessageSign',
+          \ }
+        let g:neomake_info_sign = {
+          \ 'text': emoji#for('information_source'),
+          \ 'texthl': 'NeomakeInfoSign',
           \ }
 
         " TODO: make rubylint maker work with Rails engines, then re-enable it
@@ -376,6 +382,7 @@
         "   figure out why setting an emoji for g:signify_sign_delete
         "   leads to errors if this is enabled
         let g:signify_sign_show_count = 0
+        let g:signify_realtime = 0
 
         let g:signify_sign_add = emoji#for('small_blue_diamond')
         let g:signify_sign_change = emoji#for('small_orange_diamond')
