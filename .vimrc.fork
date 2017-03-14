@@ -374,6 +374,7 @@
         "   figure out why setting an emoji for g:signify_sign_delete
         "   leads to errors if this is enabled
         let g:signify_sign_show_count = 0
+        let g:signify_realtime = 0
 
         let g:signify_sign_add = emoji#for('small_blue_diamond')
         let g:signify_sign_change = emoji#for('small_orange_diamond')
