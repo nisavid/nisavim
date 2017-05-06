@@ -392,8 +392,14 @@
 
     " Sneak {
         let g:sneak#label = 1
+        let g:sneak#target_labels =
+          \ "aoeuidhtns-;pyfgcrl'qjkxbmwvzAOEUIDHTNS_;PYFGCRL\"QJKXBMWVZ"
+        let g:sneak#prompt = 'sneak>'
+
         nmap <leader>z <Plug>Sneak_s
         nmap <leader>Z <Plug>Sneak_S
+        omap <leader>z <Plug>Sneak_s
+        omap <leader>Z <Plug>Sneak_S
         nmap f <Plug>Sneak_f
         nmap F <Plug>Sneak_F
         xmap f <Plug>Sneak_f
