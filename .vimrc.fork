@@ -214,6 +214,10 @@
         map <leader>xt <Plug>conflict-marker-themselves
     " }
 
+    " dbext {
+        let g:dbext_map_prefix = "<leader>d"
+    " }
+
     " deoplete {
         let g:deoplete#enable_at_startup = 1
     " }
@@ -400,6 +404,8 @@
         nmap <leader>Z <Plug>Sneak_S
         omap <leader>z <Plug>Sneak_s
         omap <leader>Z <Plug>Sneak_S
+        vmap <leader>z <Plug>Sneak_s
+        vmap <leader>Z <Plug>Sneak_S
         nmap f <Plug>Sneak_f
         nmap F <Plug>Sneak_F
         xmap f <Plug>Sneak_f
