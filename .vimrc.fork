@@ -211,6 +211,10 @@
         map <leader>xt <Plug>conflict-marker-themselves
     " }
 
+    " dbext {
+        let g:dbext_map_prefix = "<leader>d"
+    " }
+
     " devdocs {
         augroup plugin-devdocs
             autocmd!
