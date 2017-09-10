@@ -398,6 +398,8 @@
         nmap <leader>Z <Plug>Sneak_S
         omap <leader>z <Plug>Sneak_s
         omap <leader>Z <Plug>Sneak_S
+        vmap <leader>z <Plug>Sneak_s
+        vmap <leader>Z <Plug>Sneak_S
         nmap f <Plug>Sneak_f
         nmap F <Plug>Sneak_F
         xmap f <Plug>Sneak_f
