@@ -7,7 +7,6 @@ let g:spf13_bundle_groups=
          \'writing',
          \'neocomplete',
          \'haskell',
-         \'html',
          \'javascript',
          \'php',
          \'python',
@@ -15,6 +14,9 @@ let g:spf13_bundle_groups=
          \'scala',
          \'twig',
          \]
+         " The `html` group is broken due to amirh/HTML-AutoCloseTag (as of 2017-10-12).
+         " See the workaround in .vimrc.bundles.fork.
+         "\'html',
 
 "let g:spf13_use_powerline=0
 let g:airline_powerline_fonts=1
