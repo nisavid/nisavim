@@ -1,5 +1,12 @@
 " Vim config | bundles | nisavim
 
+" Workaround for `html` bundle group's broken ref to amirh/HTML-AutoCloseTag (as of
+" 2017-10-12).  See the disabled `html` group in .vimrc.before.fork.
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'gorodinskiy/vim-coloresque'
+Bundle 'tpope/vim-haml'
+Bundle 'mattn/emmet-vim'
+
 Bundle 'maxbrunsfeld/vim-yankstack'
 call yankstack#setup()
 
